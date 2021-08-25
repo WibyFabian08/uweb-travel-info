@@ -13,6 +13,7 @@ const List = ({ category, setCategory, childClicked, places, isLoading }) => {
         .map((_, i) => refs[i] || createRef())
     );
   }, [places]);
+  
   return (
     <div
       className="w-2/6 h-full p-5 mb-5 overflow-x-hidden overflow-y-auto"

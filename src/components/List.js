@@ -2,7 +2,7 @@ import React from "react";
 
 import CardDetail from "./CardDetail";
 
-const List = ({ category, setCategory, rating, setRating }) => {
+const List = ({ category, setCategory, rating, setRating, places }) => {
   return (
     <div
       className="w-2/6 h-full p-5 mb-5 overflow-x-hidden overflow-y-auto"
@@ -54,8 +54,14 @@ const List = ({ category, setCategory, rating, setRating }) => {
           </option>
         </select>
       </div>
-      <CardDetail></CardDetail>
-      <CardDetail></CardDetail>
+      {
+        places && places.map((place, index) => {
+          return (
+            <CardDetail place={place} key={index}></CardDetail>
+          )
+        })
+      }
+      
     </div>
   );
 };

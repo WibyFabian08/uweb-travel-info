@@ -5,7 +5,14 @@ import restoran from "../assets/images/restoran.png";
 
 import mapStyles from "../mapStyles";
 
-const Map = ({ coordinate, setCoordinate, bounds, setBounds }) => {
+const Map = ({
+  coordinate,
+  setCoordinate,
+  bounds,
+  setBounds,
+  places,
+  weather,
+}) => {
   return (
     <div className="w-4/6 bg-white">
       <div className="w-full h-full">
@@ -23,31 +30,49 @@ const Map = ({ coordinate, setCoordinate, bounds, setBounds }) => {
           onChange={(e) => {
             setCoordinate({ lat: e.center.lat, lng: e.center.lng });
             setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
-            console.log(e);
+            // console.log(e);
           }}
           onClick={(e) => console.log(e)}
           onChildClick={(child) => console.log(child)}
         >
-          <div
-            className="overflow-hidden bg-white rounded-lg shadow-2xl"
-            lat={coordinate.lat}
-            lng={coordinate.lng}
-            style={{ height: 80, width: 80, cursor: "pointer" }}
-          >
-            <img
-              src={restoran}
-              className="object-cover w-full"
-              alt="restoran"
-            />
-            <div className="px-1">
-              <p className="" style={{ fontSize: 8 }}>
-                Restoran Jepang
-              </p>
-              <p className="" style={{ fontSize: 8 }}>
-                Rating
-              </p>
-            </div>
-          </div>
+          {places &&
+            places.map((place, index) => {
+              return (
+                <div
+                  className="overflow-hidden bg-white rounded-lg shadow-2xl"
+                  lat={place?.latitude}
+                  lng={place?.longitude}
+                  key={index}
+                  style={{ height: 80, width: 80, cursor: "pointer" }}
+                >
+                  <img
+                    src={place ? place.photo?.images?.thumbnail?.url : restoran}
+                    className="object-cover w-full"
+                    alt="restoran"
+                  />
+                  <div className="px-1">
+                    <p className="" style={{ fontSize: 8 }}>
+                      {place && place?.name}
+                    </p>
+                    <p className="" style={{ fontSize: 8 }}>
+                      {place && place?.phone}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+
+          {weather &&
+            weather.list.map((data, index) => {
+              return (
+                <div lat={data?.coord?.lat} lng={data?.coord?.lon} key={index}>
+                  <img
+                    src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`}
+                    height="70px"
+                  />
+                </div>
+              );
+            })}
         </GoogleMapReact>
       </div>
     </div>

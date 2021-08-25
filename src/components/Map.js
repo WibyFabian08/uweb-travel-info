@@ -30,7 +30,7 @@ const Map = ({
             setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
           }}
           onChildClick={(child) => {
-            setChildClicked(child)
+            setChildClicked(child);
           }}
         >
           {places &&
@@ -44,7 +44,7 @@ const Map = ({
                   style={{ height: 80, width: 80, cursor: "pointer" }}
                 >
                   <img
-                    src={place ? place.photo?.images?.thumbnail?.url : ''}
+                    src={place ? place.photo?.images?.thumbnail?.url : ""}
                     className="object-cover w-full"
                     alt="place"
                   />
@@ -68,6 +68,7 @@ const Map = ({
                   <img
                     src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`}
                     height="70px"
+                    lat='weather'
                   />
                 </div>
               );

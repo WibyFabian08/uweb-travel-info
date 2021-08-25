@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { getPlaces, getWeather } from "./api/getDataApi";
 import "./assets/css/style.css";

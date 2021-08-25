@@ -3,13 +3,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import CardDetail from "./CardDetail";
 
-const List = ({
-  category,
-  setCategory,
-  childClicked,
-  places,
-  isLoading,
-}) => {
+const List = ({ category, setCategory, childClicked, places, isLoading }) => {
   const [elRefs, setElRefs] = useState([]);
 
   useEffect(() => {
@@ -58,10 +52,14 @@ const List = ({
         places &&
         places.map((place, index) => {
           return (
-            <div ref={elRefs[index]} key={index}>
-              <CardDetail selected={Number(childClicked) === index} refProp={elRefs[index]} place={place} ></CardDetail>
-            </div>
-          )
+            <CardDetail
+              key={index}
+              ref={elRefs[index]}
+              selected={Number(childClicked) === index}
+              refProp={elRefs[index]}
+              place={place}
+            ></CardDetail>
+          );
         })
       )}
     </div>

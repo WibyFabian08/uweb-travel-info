@@ -1,14 +1,12 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
 
-import restoran from "../assets/images/restoran.png";
-
 import mapStyles from "../mapStyles";
 
 const Map = ({
   coordinate,
   setCoordinate,
-  bounds,
+  setChildClicked,
   setBounds,
   places,
   weather,
@@ -30,10 +28,10 @@ const Map = ({
           onChange={(e) => {
             setCoordinate({ lat: e.center.lat, lng: e.center.lng });
             setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
-            // console.log(e);
           }}
-          onClick={(e) => console.log(e)}
-          onChildClick={(child) => console.log(child)}
+          onChildClick={(child) => {
+            setChildClicked(child)
+          }}
         >
           {places &&
             places.map((place, index) => {
@@ -46,9 +44,9 @@ const Map = ({
                   style={{ height: 80, width: 80, cursor: "pointer" }}
                 >
                   <img
-                    src={place ? place.photo?.images?.thumbnail?.url : restoran}
+                    src={place ? place.photo?.images?.thumbnail?.url : ''}
                     className="object-cover w-full"
-                    alt="restoran"
+                    alt="place"
                   />
                   <div className="px-1">
                     <p className="" style={{ fontSize: 8 }}>
@@ -63,7 +61,8 @@ const Map = ({
             })}
 
           {weather &&
-            weather.list.map((data, index) => {
+            weather.list?.length > 0 &&
+            weather.list?.map((data, index) => {
               return (
                 <div lat={data?.coord?.lat} lng={data?.coord?.lon} key={index}>
                   <img

@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState, createRef } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import CardDetail from "./CardDetail";
 
-const List = ({ category, setCategory, rating, setRating, places }) => {
+const List = ({
+  category,
+  setCategory,
+  childClicked,
+  places,
+  isLoading,
+}) => {
+  const [elRefs, setElRefs] = useState([]);
+
+  useEffect(() => {
+    setElRefs((refs) =>
+      Array(places?.length)
+        .fill()
+        .map((_, i) => refs[i] || createRef())
+    );
+  }, [places]);
   return (
     <div
       className="w-2/6 h-full p-5 mb-5 overflow-x-hidden overflow-y-auto"
@@ -33,35 +49,21 @@ const List = ({ category, setCategory, rating, setRating, places }) => {
             Hiburan
           </option>
         </select>
-        <select
-          name="rating"
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
-          className="px-4 py-2 ml-5 bg-white rounded-lg shadow-xl focus:outline-none"
-          id=""
-        >
-          <option className="py-2" value="">
-            Rating
-          </option>
-          <option className="py-2" value="2.0">
-            Above 2
-          </option>
-          <option className="py-2" value="3.0">
-            Above 3
-          </option>
-          <option className="py-2" value="4.0">
-            Above 4
-          </option>
-        </select>
       </div>
-      {
-        places && places.map((place, index) => {
+      {isLoading ? (
+        <div className="flex justify-center">
+          <CircularProgress />
+        </div>
+      ) : (
+        places &&
+        places.map((place, index) => {
           return (
-            <CardDetail place={place} key={index}></CardDetail>
+            <div ref={elRefs[index]} key={index}>
+              <CardDetail selected={Number(childClicked) === index} refProp={elRefs[index]} place={place} ></CardDetail>
+            </div>
           )
         })
-      }
-      
+      )}
     </div>
   );
 };

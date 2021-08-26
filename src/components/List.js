@@ -13,10 +13,10 @@ const List = ({ category, setCategory, childClicked, places, isLoading }) => {
         .map((_, i) => refs[i] || createRef())
     );
   }, [places]);
-  
+
   return (
     <div
-      className="w-2/6 h-full p-5 mb-5 overflow-x-hidden overflow-y-auto"
+      className="relative w-2/6 h-full p-5 mb-5 overflow-x-hidden overflow-y-auto"
       style={{ backgroundColor: "#edf0f5" }}
     >
       <h2 className="mb-3 text-3xl">
@@ -45,24 +45,26 @@ const List = ({ category, setCategory, childClicked, places, isLoading }) => {
           </option>
         </select>
       </div>
-      {isLoading ? (
-        <div className="flex justify-center">
-          <CircularProgress />
-        </div>
-      ) : (
-        places &&
-        places.map((place, index) => {
-          return (
-            <CardDetail
-              key={index}
-              ref={elRefs[index]}
-              selected={Number(childClicked) === index}
-              refProp={elRefs[index]}
-              place={place}
-            ></CardDetail>
-          );
-        })
-      )}
+      <div className="relative">
+        {isLoading ? (
+          <div className="flex justify-center">
+            <CircularProgress />
+          </div>
+        ) : (
+          places &&
+          places.map((place, index) => {
+            return (
+              <div ref={elRefs[index]} key={index}>
+                <CardDetail
+                  selected={Number(childClicked) === index}
+                  refProp={elRefs[index]}
+                  place={place}
+                ></CardDetail>
+              </div>
+            );
+          })
+        )}
+      </div>
     </div>
   );
 };

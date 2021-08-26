@@ -1,6 +1,9 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
 
+import Rating from "@material-ui/lab/Rating";
+import SearchIcon from "@material-ui/icons/Search";
+
 import mapStyles from "../mapStyles";
 
 const Map = ({
@@ -12,7 +15,7 @@ const Map = ({
   weather,
 }) => {
   return (
-    <div className="w-4/6 bg-white">
+    <div className="relative w-4/6 bg-white">
       <div className="w-full h-full">
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API_KEY }}
@@ -29,32 +32,38 @@ const Map = ({
             setCoordinate({ lat: e.center.lat, lng: e.center.lng });
             setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
           }}
-          onChildClick={(child) => {
-            setChildClicked(child);
+          onChildClick={(e) => {
+            setChildClicked(e);
           }}
         >
           {places &&
             places.map((place, index) => {
               return (
                 <div
-                  className="overflow-hidden bg-white rounded-lg shadow-2xl"
+                  className="relative z-0 overflow-hidden bg-white rounded-lg shadow-2xl hover:z-20"
                   lat={place?.latitude}
                   lng={place?.longitude}
                   key={index}
-                  style={{ height: 80, width: 80, cursor: "pointer" }}
+                  style={{ width: 100 }}
                 >
-                  <img
-                    src={place ? place.photo?.images?.thumbnail?.url : ""}
-                    className="object-cover w-full"
-                    alt="place"
-                  />
-                  <div className="px-1">
-                    <p className="" style={{ fontSize: 8 }}>
+                  <div className="p-2">
+                    <div className="flex">
+                    <SearchIcon fontSize="small" style={{cursor: "pointer"}}></SearchIcon> 
+                    <p className="font-bold" style={{ fontSize: 10 }}>
                       {place && place?.name}
                     </p>
-                    <p className="" style={{ fontSize: 8 }}>
-                      {place && place?.phone}
-                    </p>
+                    </div>
+                    <img
+                      src={place ? place.photo?.images?.thumbnail?.url : ""}
+                      className="object-cover w-full rounded-lg"
+                      alt="place"
+                    />
+                    <Rating
+                      name="disabled"
+                      size="small"
+                      value={Number(place?.rating)}
+                      disabled
+                    />
                   </div>
                 </div>
               );
@@ -68,7 +77,7 @@ const Map = ({
                   <img
                     src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`}
                     height="70px"
-                    alt='weather'
+                    alt="weather"
                   />
                 </div>
               );

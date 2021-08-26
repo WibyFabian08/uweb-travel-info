@@ -11,7 +11,7 @@ export const getPlaces = (bounds, setPlaces, setIsLoading, category) => {
         tr_latitude: bounds.ne.lat,
       },
       headers: {
-        "x-rapidapi-key": "3e06cd3365msh6d494af00c1fba7p1ef6d9jsn10062556f158",
+        "x-rapidapi-key": process.env.REACT_APP_RAPID_API,
         "x-rapidapi-host": "travel-advisor.p.rapidapi.com",
       },
     })
@@ -34,7 +34,7 @@ export const getWeather = (bounds, setWeather, setIsLoading) => {
         lon: bounds.ne.lng,
       },
       headers: {
-        "x-rapidapi-key": "3e06cd3365msh6d494af00c1fba7p1ef6d9jsn10062556f158",
+        "x-rapidapi-key": process.env.REACT_APP_RAPID_API,
         "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
       },
     })

@@ -15,7 +15,7 @@ const Map = ({
     <div className="w-4/6 bg-white">
       <div className="w-full h-full">
         <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.MAP_API_KEY }}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API_KEY }}
           defaultCenter={coordinate}
           center={coordinate}
           margin={[50, 50, 50, 50]}
@@ -68,7 +68,7 @@ const Map = ({
                   <img
                     src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`}
                     height="70px"
-                    lat='weather'
+                    alt='weather'
                   />
                 </div>
               );
